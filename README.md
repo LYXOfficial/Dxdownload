@@ -8,3 +8,5 @@
 3.主界面登录窗口也会卡死
 需要使用python3.8环境,然后安装pyqt5和win32api和selenium库
 恳请查错!
+--更新--
+现在内置了运行环境，直接运行Dxdownload.exe即可,还是没有开发完成
