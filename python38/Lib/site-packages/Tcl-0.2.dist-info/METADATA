@@ -1,0 +1,23 @@
+Metadata-Version: 2.1
+Name: Tcl
+Version: 0.2
+Summary: A coding language used for Graphical user interface
+Home-page: https://github.com/SCORPIA-oss/Tcl-repo
+Author: Repl.it Developer
+Author-email: xsumagravity@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: MacOS
+
+![sq](https://storage.googleapis.com/replit/images/1584965203510_9688b4a3419ef02039490993c8ca4446.jpeg)
+
+> # Tcl 
+
+> Tcl is a python package based around the coding language for gui [tcl](https://www.linuxjournal.com/article/7225). It allows you to desighn mobile apps that you are planning to build on Android and other platforms such as IOS and Linux.
+
+> The tcl package is still under development. So for know you can only change the window size, the window title, add text to the window, add a button to the window, make a message box and run your code.
+
+> For further information visit [tcl_repo](https://github.com/SCORPIA-oss/Tcl-repo)
+
