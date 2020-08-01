@@ -32,10 +32,10 @@ class MainWidget(QSplashScreen):
     def mousePressEvent(self,event):
         pass
 def close():
-    for i in range(25,101):
+    for i in range(26,101):
         pbar.setValue(i)
-        time.sleep(0.01)
-    time.sleep(0.5)
+        time.sleep(0.001)
+    time.sleep(0.01)
     quit()
 def a(f):
     def wrapper(*args, **kwargs):
@@ -44,19 +44,13 @@ def a(f):
 
     return wrapper
 @a
-def main():
+def _main_():
     import time
     app = QApplication(sys.argv)
     main = MainWidget()
     main.show()
     sys.exit(app.exec_())
 if __name__ == "__main__":
-    # import time
-    # app = QApplication(sys.argv)
-    # main = MainWidget()
-    # main.show()
-    # QTimer.singleShot(5000,close)
-    # sys.exit(app.exec_())
-    main()
+    _main_()
     time.sleep(5)
     close()

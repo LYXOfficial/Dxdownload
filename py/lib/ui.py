@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -12,7 +12,7 @@ import os,time
 import json
 from threading import Thread
 try:
-    class Ui_MainWindow(object):
+    class Ui_MainWindow(QMainWindow):
         def setupUi(self, MainWindow):
             MainWindow.setObjectName("MainWindow")
             MainWindow.resize(940, 716)
@@ -38,6 +38,9 @@ try:
             self.pushButton.setObjectName("pushButton")
             self.tweetb=QtWidgets.QPushButton(self.centralwidget)
             self.tweetb.setObjectName("tweetb")
+            self.progress=QProgressBar(self)
+            self.progress.setFormat("")
+            self.plabel=QLabel(self)
             self.horizontalLayout_2.addWidget(self.pushButton)
             self.pushButton_10 = QtWidgets.QPushButton(self.centralwidget)
             self.pushButton_10.setObjectName("pushButton_10")
@@ -45,6 +48,8 @@ try:
             spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
             self.horizontalLayout_2.addItem(spacerItem)
             self.horizontalLayout_2.addWidget(self.tweetb)
+            self.horizontalLayout_2.addWidget(self.progress)
+            self.horizontalLayout_2.addWidget(self.plabel)
             self.verticalLayout_3.addLayout(self.horizontalLayout_2)
             self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
             self.tabWidget.setObjectName("tabWidget")
@@ -394,6 +399,70 @@ try:
                     thr.start()
 
                 return wrapper
+            @a
+            def rec():
+                # import load
+                # load._main_()
+                import get
+                alls=get.getmy()
+                self.plabel.setText(alls["disk"][0]+"/"+alls["disk"][1])
+                m=alls["disk"][0]
+                ma=alls["disk"][1]
+                m=float(m[0:len(m)-1])
+                ma=float(ma[0:len(ma)-1])
+                self.progress.setMaximum(round(ma))
+                self.progress.setValue(round(m))
+                print(alls)
+                sroot=QTreeWidgetItem()
+                with open(getpath()+"\\py\\lib\\setting.json") as f:
+                    j=json.load(f)
+                o=j["username"]
+                sroot.setText(0,o+"的网盘")
+                sroot.setIcon(0,QIcon(getpath()+"\\icon\\disk.ico"))
+                for i in range(len(alls["file"])):
+                    exec("self.child{}=QTreeWidgetItem(sroot)".format(i))
+                    exec("self.child{}.setText(0,alls[\"file\"][{}])".format(i,i))
+                    exec("self.child{}.setText(1,alls[\"big\"][{}])".format(i,i))
+                    exec("self.child{}.setText(2,alls[\"date\"][{}])".format(i,i))
+                    exec("self.child{}.setText(3,alls[\"type\"][{}])".format(i,i))
+                    types={"zips":("zip文件","rar文件","7z文件"),"musics":("mp3文件","mp2文件","wav文件","flac文件"),"docs":("doc文件","docx文件",'rtf文件'),"excels":("xls文件","xlsx文件"),"ppts":("ppt文件","pptx文件"),"pics":("gif文件","png文件","jpg文件","jpeg文件","raw文件","tif文件","tiff文件","ico文件","pic文件","wmf文件","bmp文件","pdf文件"),"videos":("mp4文件","wmv文件","flv文件","avi文件","mov文件","3gp文件","rm文件","rmvb文件","mpeg文件"),"apps":["exe文件","app文件","apk文件"],"isos":("iso文件","img文件"),"txts":("txt文件","md文件","json文件","ini文件"),"scripts":("bat文件","cmd文件","vbs文件","js文件","reg文件")}
+                    a=alls["type"][i]
+                    a=a.lower()
+                    exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\nfound.ico\"))".format(i))
+                    if a in types["zips"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\zip.ico\"))".format(i))
+                    if a in types["musics"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\media.ico\"))".format(i))
+                    if a in types["docs"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\word.ico\"))".format(i))
+                    if a in types["ppts"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\ppt.ico\"))".format(i))
+                    if a in types["pics"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\pic.ico\"))".format(i))
+                    if a in types["videos"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\video.ico\"))".format(i))
+                    if a in types["apps"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\app.ico\"))".format(i))
+                    if a in types["isos"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\iso.ico\"))".format(i))
+                    if a in types["txts"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\txt.ico\"))".format(i))
+                    if a in types["scripts"]:
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\script.ico\"))".format(i))
+                    if a=="文件夹":
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\folder.ico\"))".format(i))
+                    exec("self.child{}.setCheckState(0, not Qt.CheckState)".format(i))
+                self.treeWidget.addTopLevelItem(sroot)
+                self.treeWidget.expandAll()
+               # load.close()
+            if dl.islogin():
+                self.reload.clicked.connect(lambda:rec())
+                rec()
+            else:
+                sroot=QTreeWidgetItem()
+                sroot.setText(0,"未登录")
+                sroot.setIcon(0,QIcon(getpath()+"\\icon\\nfound.ico"))
+                self.treeWidget.addTopLevelItem(sroot)
             with open(getpath()+"\\py\\lib\\setting.json","r") as j:
                 b=json.load(j)
                 b=b["maindownload"]
@@ -429,6 +498,68 @@ try:
                     self.pushButton.setText(_translate("MainWindow", "切换账号"))
                 else:
                     self.pushButton.setText(_translate("MainWindow", "账号登录"))
+                def a(f):
+                    def wrapper(*args, **kwargs):
+                        thr = Thread(target=f, args=args, kwargs=kwargs)
+                        thr.start()
+
+                    return wrapper
+                @a
+                def rec():
+                    # import load
+                    # load._main_()
+                    import get
+                    alls=get.getmy()
+                    self.plabel.setText(alls["disk"][0]+"/"+alls["disk"][1])
+                    m=alls["disk"][0]
+                    ma=alls["disk"][1]
+                    m=float(m[0:len(m)-1])
+                    ma=float(ma[0:len(ma)-1])
+                    self.progress.setMaximum(round(ma))
+                    self.progress.setValue(round(m))
+                    print(alls)
+                    sroot=QTreeWidgetItem()
+                    with open(getpath()+"\\py\\lib\\setting.json") as f:
+                        j=json.load(f)
+                    o=j["username"]
+                    sroot.setText(0,o+"的网盘")
+                    sroot.setIcon(0,QIcon(getpath()+"\\icon\\disk.ico"))
+                    for i in range(len(alls["file"])):
+                        exec("self.child{}=QTreeWidgetItem(sroot)".format(i))
+                        exec("self.child{}.setText(0,alls[\"file\"][{}])".format(i,i))
+                        exec("self.child{}.setText(1,alls[\"big\"][{}])".format(i,i))
+                        exec("self.child{}.setText(2,alls[\"date\"][{}])".format(i,i))
+                        exec("self.child{}.setText(3,alls[\"type\"][{}])".format(i,i))
+                        types={"zips":("zip文件","rar文件","7z文件"),"musics":("mp3文件","mp2文件","wav文件","flac文件"),"docs":("doc文件","docx文件",'rtf文件'),"excels":("xls文件","xlsx文件"),"ppts":("ppt文件","pptx文件"),"pics":("gif文件","png文件","jpg文件","jpeg文件","raw文件","tif文件","tiff文件","ico文件","pic文件","wmf文件","bmp文件","pdf文件"),"videos":("mp4文件","wmv文件","flv文件","avi文件","mov文件","3gp文件","rm文件","rmvb文件","mpeg文件"),"apps":["exe文件","app文件","apk文件"],"isos":("iso文件","img文件"),"txts":("txt文件","md文件","json文件","ini文件"),"scripts":("bat文件","cmd文件","vbs文件","js文件","reg文件")}
+                        a=alls["type"][i]
+                        a=a.lower()
+                        exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\nfound.ico\"))".format(i))
+                        if a in types["zips"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\zip.ico\"))".format(i))
+                        if a in types["musics"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\media.ico\"))".format(i))
+                        if a in types["docs"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\word.ico\"))".format(i))
+                        if a in types["ppts"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\ppt.ico\"))".format(i))
+                        if a in types["pics"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\pic.ico\"))".format(i))
+                        if a in types["videos"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\video.ico\"))".format(i))
+                        if a in types["apps"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\app.ico\"))".format(i))
+                        if a in types["isos"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\iso.ico\"))".format(i))
+                        if a in types["txts"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\txt.ico\"))".format(i))
+                        if a in types["scripts"]:
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\script.ico\"))".format(i))
+                        if a=="文件夹":
+                            exec("self.child{}.setIcon(0,QIcon(getpath()+\"\\icon\\folder.ico\"))".format(i))
+                        exec("self.child{}.setCheckState(0, not Qt.CheckState)".format(i))
+                    self.treeWidget.addTopLevelItem(sroot)
+                    self.treeWidget.expandAll()
+                rec()
             def twi():
                 with open(getpath()+"\\py\\lib\\setting.json","r") as j:
                     b=json.load(j)
@@ -447,7 +578,8 @@ try:
             _translate = QtCore.QCoreApplication.translate
             MainWindow.setWindowTitle(_translate("MainWindow", "Dxdownload"))
             MainWindow.setWindowIcon(QIcon(getpath()+r"\icon\Dx.ico"))
-            self.label.setText(_translate("MainWindow", "<html><head/><body><p>Dxdownload          <span style=\" font-size:16pt;\">度盘不限速工具</span></p></body></html>"))
+            self.plabel.setText(r"-/-")
+            self.label.setText(_translate("MainWindow", "<html><head/><body><p>Dxdownload          <span style=\" font-size:16pt;\">度盘不限速下载器</span></p></body></html>"))
             def zt():
                 if dl.islogin():
                     self.label_2.setText(_translate("MainWindow", dl.getname()))

@@ -11,7 +11,7 @@ import re
 def islogin():
     with open(getpath()+"\\py\\lib\\setting.json") as e:
         file=json.load(e)
-    if file["isLogin"]:
+    if file["isLogin"]==1:
         return True
     else:
         return False
@@ -58,7 +58,7 @@ def login():
                 app = QApplication(sys.argv)
                 super().__init__()
                 reply = QMessageBox.information(self,"登录提示","登陆成功",QMessageBox.Ok)
-        do()
+        d.quit()
         
     except:
         e=traceback.format_exc()

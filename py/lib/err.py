@@ -58,9 +58,9 @@ class Ui_Dialog(object):
         self.pushButton.setText(_translate("Dialog", "反馈"))
         self.pushButton.clicked.connect(rr)
         self.label_4.setText(_translate("Dialog", "请将该错误信息反馈给作者，也许能帮助解决此问题"))
-        self.label.setText(_translate("Dialog", "❌"))
+        self.label.setPixmap(QPixmap(path.getpath()+"\\icon\\error.ico"))
         self.label_3.setText(_translate("Dialog", "错误信息："))
-        self.label_2.setText(_translate("Dialog", "程序出错！"))
+        self.label_2.setText(_translate("Dialog", "程序出错！\n"))
         self.textBrowser.setText(x)
 
 def error(ex):
