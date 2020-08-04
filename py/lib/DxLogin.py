@@ -25,7 +25,6 @@ def login():
         class do(QWidget):
             def __init__(self):
                 import sys
-                app = QApplication(sys.argv)
                 super().__init__()
                 reply = QMessageBox.information(self,"登录提示","将弹出浏览器框，请在浏览器中登录，登录成功后会自动登录到程序，按OK开始",QMessageBox.Ok)
 

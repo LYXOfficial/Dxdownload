@@ -11,6 +11,7 @@ import tweet
 import os,time
 import json
 from threading import Thread
+import get
 try:
     class Ui_MainWindow(QMainWindow):
         def setupUi(self, MainWindow):
@@ -400,10 +401,19 @@ try:
 
                 return wrapper
             @a
+            def s():
+                get.start()
+            class loo(QSplashScreen):
+                def __init__(self):
+                    loa=QSplashScreen()
+                    loa.show()
+                def mousePressEvent(self,event):
+                    pass
+            loo()
+            @a
             def rec():
                 # import load
                 # load._main_()
-                import get
                 alls=get.getmy()
                 self.plabel.setText(alls["disk"][0]+"/"+alls["disk"][1])
                 m=alls["disk"][0]
