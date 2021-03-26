@@ -50,7 +50,7 @@ class Ui_Dialog(object):
         def rr():
             with open(path.getpath()+"\\py\\lib\\tmp.json","w",encoding="ANSI") as f:
                 json.dump({'is':1,"text":x},f)
-            os.system("python "+path.getpath()+"\\py\\lib\\tweet.py")
+            os.system("pythonw "+path.getpath()+"\\py\\lib\\tweet.py")
             sys.exit(0)
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "错误!"))
