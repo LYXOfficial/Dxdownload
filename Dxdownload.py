@@ -7,4 +7,4 @@ def getpath():
     handle = winreg.OpenKey(winreg.HKEY_CURRENT_USER, string, 0, (winreg.KEY_WOW64_64KEY + winreg.KEY_READ))
     location, _type = winreg.QueryValueEx(handle, "install_path")
     return location
-os.system(getpath()+"\\python38\\pythonw.exe "+getpath()+"\\py\\__main__.py")
+os.system("pythonw "+getpath()+"\\py\\__main__.py")
