@@ -1,7 +1,7 @@
 # Dxdownload
 完全免费、开源的百度网盘不限速软件（编写中，暂无法使用）
 本软件采用python编写，目前gui写好了，其他没写
-注意：本软件的path机制是注册表，请在HKEY_CURRENT_USER\SOFTWARE\创建一个键:Dxdownload,然后创建一个值:install_path,并设置为dxdownload的__main__.py的路径
+注意：本软件的path机制是注册表，请在HKEY_CURRENT_USER\SOFTWARE\创建一个键:Dxdownload,然后创建一个键：path，最后创建一个值:install_path,并设置为dxdownload的__main__.py的路径
 已知bug:
 1.浏览器登录经常闪退报错
 2.错误页面点击反馈页面卡死
